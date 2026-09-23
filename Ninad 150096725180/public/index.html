@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Live Auction Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div id="joinModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-gavel"></i> Enter the Auction Floor</h2>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="usernameInput"><i class="fas fa-user"></i> Your Name</label>
+          <input type="text" id="usernameInput" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <label for="auctionSelect"><i class="fas fa-hammer"></i> Select Auction</label>
+          <select id="auctionSelect">
+            <option value="">-- Select an auction --</option>
+          </select>
+        </div>
+        <button id="joinBtn">
+          <i class="fas fa-door-open"></i> Join Auction
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="outbidAlert" class="alert-box">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span id="outbidMessage"></span>
+  </div>
+
+  <div id="extendedAlert" class="alert-box extended">
+    <i class="fas fa-clock"></i>
+    <span id="extendedMessage"></span>
+  </div>
+
+  <div id="auctionEndedAlert" class="alert-box ended">
+    <i class="fas fa-trophy"></i>
+    <span id="endedMessage"></span>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-gavel"></i>
+        <h1>Live Auction Floor</h1>
+      </div>
+      <div class="stats">
+        <div class="stat-box">
+          <i class="fas fa-users"></i>
+          <span id="viewerCount">0</span>
+          <span class="stat-label">Viewers</span>
+        </div>
+        <div class="stat-box">
+          <i class="fas fa-user"></i>
+          <span id="currentUser">-</span>
+          <span class="stat-label">You</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="auction-header">
+        <div class="item-info">
+          <h2 id="itemTitle">Loading...</h2>
+          <p id="itemDescription">-</p>
+        </div>
+        <div class="status-badge" id="statusBadge">
+          <span id="statusText">ACTIVE</span>
+        </div>
+      </section>
+
+      <section class="price-ticker">
+        <div class="current-price">
+          <span class="label">Current Bid</span>
+          <span class="price" id="currentPrice">₹0</span>
+        </div>
+        <div class="highest-bidder">
+          <span class="label">Highest Bidder</span>
+          <span class="bidder" id="highestBidder">-</span>
+        </div>
+      </section>
+
+      <section class="timer-section">
+        <div class="timer-display">
+          <i class="fas fa-stopwatch"></i>
+          <span id="timer">0</span>
+          <span class="timer-label">seconds remaining</span>
+        </div>
+        <button id="winningBidderBadge" class="winning-badge" style="display: none;">
+          <i class="fas fa-crown"></i> You are winning!
+        </button>
+      </section>
+
+      <section class="bidding-section">
+        <div class="bid-inputs">
+          <h3><i class="fas fa-hand-pointer"></i> Place Your Bid</h3>
+          <div class="quick-bids">
+            <button class="quick-bid" data-increment="1">
+              ₹<span class="increment-val"></span>
+            </button>
+            <button class="quick-bid" data-increment="2">
+              ₹<span class="increment-val"></span>
+            </button>
+            <button class="quick-bid" data-increment="5">
+              ₹<span class="increment-val"></span>
+            </button>
+            <button class="quick-bid" data-increment="10">
+              ₹<span class="increment-val"></span>
+            </button>
+          </div>
+          <div class="custom-bid">
+            <div class="input-group">
+              <span class="currency">₹</span>
+              <input type="number" id="bidAmount" placeholder="Enter bid amount">
+            </div>
+            <button id="placeBidBtn">
+              <i class="fas fa-gavel"></i> Place Bid
+            </button>
+          </div>
+          <p class="min-bid-hint">Minimum bid: ₹<span id="minBidHint"></span></p>
+        </div>
+        <div class="bid-error" id="bidError" style="display: none;">
+          <i class="fas fa-times-circle"></i>
+          <span id="bidErrorMessage"></span>
+        </div>
+      </section>
+
+      <section class="bid-history">
+        <h3><i class="fas fa-history"></i> Bid History</h3>
+        <div class="history-list" id="bidHistory">
+          <p class="no-bids">No bids yet. Be the first to bid!</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p><i class="fas fa-broadcast-tower"></i> Connected via Socket.io | Real-Time Updates</p>
+    </footer>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
